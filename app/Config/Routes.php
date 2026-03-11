@@ -41,4 +41,9 @@ $routes->add('reports/specific_discounts', 'Reports::specific_discount_input');
 $routes->add('reports/specific_suppliers', 'Reports::specific_supplier_input');
 
 
-
+// --- CARD DISCOUNTS ROUTES ---
+$routes->get('card_discounts', 'Card_discounts::index');
+$routes->get('card_discounts/view', 'Card_discounts::view');
+$routes->get('card_discounts/view/(:any)', 'Card_discounts::view/$1');
+$routes->post('card_discounts/save/(:any)', 'Card_discounts::save/$1');
+$routes->get('card_discounts/delete/(:any)', 'Card_discounts::delete/$1');

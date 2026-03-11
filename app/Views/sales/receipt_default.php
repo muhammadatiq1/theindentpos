@@ -200,7 +200,7 @@ td, th {
 }
       
 
-       
+        
 
 
     </script>
@@ -282,9 +282,21 @@ td, th {
         <tr></tr>
 
         <?php $border = (!$config['receipt_show_taxes'] && !($config['receipt_show_total_discount'] && $discount > 0)); ?>
+        
+        <?php // --- FEATURE 1 FIX: Card Discount Amount Row --- ?>
+        <?php if(isset($card_discount_amount) && $card_discount_amount > 0): ?>
         <tr>
-            <td colspan="3" style="text-align: center;<?= $border ? ' border-top: 2px solid black;' : '' ?>"><?= lang('Sales.total') ?></td>
-            <td style="text-align: center;<?= $border ? ' border-top: 2px solid black;' : '' ?>"><?= to_currency($total) ?></td>
+            <td colspan="3" style="text-align: center; color: #27ae60;<?= $border ? ' border-top: 2px solid black;' : '' ?>">Card Discount Amount</td>
+            <td style="text-align: center; font-weight: bold; color: #27ae60;<?= $border ? ' border-top: 2px solid black;' : '' ?>">
+                <?= to_currency($card_discount_amount) ?>
+            </td>
+        </tr>
+        <?php endif; ?>
+
+        <tr>
+            <?php // Note: We only add the border-top here if the discount row above didn't already print it ?>
+            <td colspan="3" style="text-align: center;<?= ($border && !isset($card_discount_amount)) ? ' border-top: 2px solid black;' : '' ?>"><?= lang('Sales.total') ?></td>
+            <td style="text-align: center;<?= ($border && !isset($card_discount_amount)) ? ' border-top: 2px solid black;' : '' ?>"><?= to_currency($total) ?></td>
         </tr>
 
         <tr>
@@ -301,7 +313,7 @@ td, th {
         ?>
             <tr>
                 <td colspan="3" style="text-align: center;"><?= $splitpayment[0] ?> </td>
-                <td class="total-value"><?= to_currency($payment['payment_amount'] * -1) ?></td>
+                <td class="total-value"><?= to_currency($payment['payment_amount']) ?></td>
             </tr>
         <?php } ?>
 
@@ -331,4 +343,3 @@ td, th {
     </div>
     
 </div>
-

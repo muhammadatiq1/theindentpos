@@ -45,9 +45,6 @@ use App\Models\Employee;
 <script>
     const allItems = <?= json_encode($all_items) ?>;
 </script>
-<!-- CSS Styles -->
-<!-- CSS Styles -->
-<!-- CSS Styles -->
 <style>
 .category-grid {
     display: grid;
@@ -342,7 +339,6 @@ if (isset($success)) {
             <label for="item" class="control-label"><?= lang(ucfirst($controller_name) . '.find_or_scan_item_or_receipt') ?></label>
         </li>
         <li class="pull-left">
-            <!-- Search bar -->
             <?= form_input(['name' => 'item', 'id' => 'item', 'class' => 'form-control input-sm', 'size' => '50']) ?>
 
             
@@ -359,12 +355,7 @@ if (isset($success)) {
 
 <input type="hidden" id="allItemsJson" value='<?= $all_items_json ?>'>
 <?= form_close() ?>
-<!-- Replace your existing dropdown HTML with this -->
-
-
-    <!-- Sale Items List -->
-
-    <table class="sales_table_100" id="register">
+<table class="sales_table_100" id="register">
         <thead>
             <tr>
                 <th style="width: 5%;"><?= lang('Common.delete') ?></th>
@@ -534,8 +525,6 @@ if (isset($success)) {
 </div>
 
 
-<!-- Overall Sale -->
-
 <div id="overall_sale" class="panel panel-default">
     <div class="panel-body">
         <?= form_open("$controller_name/selectCustomer", ['id' => 'select_customer_form', 'class' => 'form-horizontal']) ?>
@@ -633,6 +622,12 @@ if (isset($success)) {
                 <th style="width: 55%; font-size: 150%"><?= lang(ucfirst($controller_name) . '.total') ?></th>
                 <th style="width: 45%; font-size: 150%; text-align: right;"><span id="sale_total"><?= to_currency($total) ?></span></th>
             </tr>
+            <tr id="card_discount_row" style="display:none; background-color: #fcf8e3;">
+                <th style="width: 55%; font-size: 120%; color: #d9534f;">Card Discounted Total</th>
+                <th style="width: 45%; font-size: 120%; text-align: right;">
+                    <span id="discounted_total_display"></span>
+                </th>
+            </tr>
         </table>
 
 
@@ -640,10 +635,47 @@ if (isset($success)) {
     </div>
         <?php if (isset($cart) && count($cart) >= 0) { ?>
 
+            <?php
+            // PURE PHP VISUAL OVERRIDE (Fixes the table text without double payments)
+            $has_card_discount = false;
+            $card_discount_amount = 0;
+            $actual_payments_total = $payments_total;
+
+            if(isset($payments) && is_array($payments)) {
+                foreach($payments as &$payment) {
+                    // Check if payment type has a percentage like [50%] or [50.00%]
+                    if (preg_match('/\[(\d+(\.\d+)?)%\]/', $payment['payment_type'], $matches)) {
+                        $has_card_discount = true;
+                        $percent = (float)$matches[1];
+                        
+                        // Full amount submitted (e.g. 999.00)
+                        $original_amt = (float)$payment['payment_amount'];
+                        $discount_amt = $original_amt * ($percent / 100);
+                        
+                        $card_discount_amount += $discount_amt;
+                        // Display the amount the customer actually pays for this row
+                        $payment['display_amount'] = $original_amt - $discount_amt;
+                    } else {
+                        $payment['display_amount'] = $payment['payment_amount'];
+                    }
+                }
+                
+                if ($has_card_discount) {
+                    $actual_payments_total = $payments_total - $card_discount_amount;
+                }
+            }
+            ?>
+
             <table class="sales_table_100" id="payment_totals">
+                <?php if($has_card_discount): ?>
+                <tr>
+                    <th style="width: 55%; font-size: 120%; color: #27ae60; font-weight: bold;">Card Discount Amount</th>
+                    <th style="width: 45%; font-size: 120%; text-align: right; color: #27ae60; font-weight: bold;"><?= to_currency($card_discount_amount) ?></th>
+                </tr>
+                <?php endif; ?>
                 <tr>
                     <th style="width: 55%;"><?= lang(ucfirst($controller_name) . '.payments_total') ?></th>
-                    <th style="width: 45%; text-align: right;"><?= to_currency($payments_total) ?></th>
+                    <th style="width: 45%; text-align: right;"><?= to_currency($actual_payments_total) ?></th>
                 </tr>
                 <tr>
                     <th style="width: 55%; font-size: 120%"><?= lang(ucfirst($controller_name) . '.amount_due') ?></th>
@@ -703,7 +735,6 @@ if (isset($success)) {
     <input type="hidden" name="amount_tendered" id="hidden_amount_tendered" value="<?= to_currency_no_money($amount_due) ?>">
     
     <table class="sales_table_100">
-        <!-- Payment Type -->
         <tr>
             <td><?= lang(ucfirst($controller_name) . '.payment') ?></td>
             <td>
@@ -721,7 +752,6 @@ if (isset($success)) {
             </td>
         </tr>
 
-        <!-- Amount Tendered -->
         <tr>
             <td><span id="amount_tendered_label"><?= lang(ucfirst($controller_name) . '.amount_tendered') ?></span></td>
             <td>
@@ -754,17 +784,12 @@ if (isset($success)) {
 <?= form_close() ?>
 <?php } ?>
 <?= form_open("$controller_name/editItem/all", ['id' => 'edit_all_discount', 'class' => 'form-horizontal']) ?>
-<?= form_hidden('all_items_discount', (string) 1) ?> <!-- cast to string -->
-
-<tr>
-    <td colspan="7" style="padding-top: 90px;"> <!-- add top padding instead of margin -->
-        <div style="display: flex; align-items: center; gap: 40px;">
-            <!-- Label -->
+<?= form_hidden('all_items_discount', (string) 1) ?> <tr>
+    <td colspan="7" style="padding-top: 90px;"> <div style="display: flex; align-items: center; gap: 40px;">
             <span style="white-space: nowrap;">
                 <?= lang(ucfirst($controller_name) . '.discount') ?>
             </span>
 
-            <!-- Input + Toggle grouped together -->
             <div style="display: flex; align-items: center;">
                 <?= form_input([
                     'name' => 'discount',
@@ -813,11 +838,14 @@ if (isset($success)) {
                         </thead>
 
                         <tbody id="payment_contents">
-                            <?php foreach ($payments as $payment_id => $payment) { ?>
+                            <?php foreach ($payments as $payment_id => $payment) { 
+                                // Uses display_amount calculated at the top
+                                $display_amt = isset($payment['display_amount']) ? $payment['display_amount'] : $payment['payment_amount'];
+                            ?>
                                 <tr>
                                     <td><?= anchor("$controller_name/deletePayment/". strtr(base64_encode($payment_id), '+/=', '-_.'), '<span class="glyphicon glyphicon-trash"></span>') ?></td>
                                     <td><?= $payment['payment_type'] ?></td>
-                                    <td style="text-align: right;"><?= to_currency($payment['payment_amount']) ?></td>
+                                    <td style="text-align: right;"><?= to_currency($display_amt) ?></td>
                                 </tr>
                                 
                             <?php } ?>
@@ -828,31 +856,27 @@ if (isset($success)) {
 
           <?= form_open("$controller_name/cancel", ['id' => 'buttons_form']) ?>
 <div class="form-group" id="buttons_sale">
-    <!-- Suspend Sale Button -->
     <div class="btn btn-sm btn-default" id="suspend_sale_button">
         <span class="glyphicon glyphicon-align-justify">&nbsp;</span>
         <?= lang(ucfirst($controller_name) . '.suspend_sale') ?>
     </div>
 
-    <!-- Cancel Sale Button -->
     <div class="btn btn-sm btn-danger" id="cancel_sale_button">
         <span class="glyphicon glyphicon-remove">&nbsp;</span>
         <?= lang(ucfirst($controller_name) . '.cancel_sale') ?>
     </div>
 
-    <!-- Order Button + Print Checkbox -->
     <div class="order-print-group">
         <button type="button" class="btn btn-sm btn-primary" id="order_button">
             <span class="glyphicon glyphicon-list-alt"></span> Order
         </button>
 
-        <label class="print-label">
+        <label class="print-label" style="margin-left: 5px;">
             <input type="checkbox" id="print_order_queue_checkbox">
             Print
         </label>
     </div>
 
-    <!-- Optional: Finish Invoice Button -->
     <?php if (!$pos_mode && isset($customer)) { ?>
         <div class="btn btn-sm btn-success" id="finish_invoice_quote_button">
             <span class="glyphicon glyphicon-ok">&nbsp;</span>
@@ -1126,23 +1150,10 @@ if (isset($success)) {
             }
         });
 
-        // FIXED: Handle payment type changes and automatic form submission
-        $('#payment_types').change(function() {
-            check_payment_type();
-            // Auto-submit the form when payment type changes
-            $('#add_payment_form').submit();
-        }).ready(check_payment_type);
-
         $('#cart_contents input').keypress(function(event) {
             if (event.which == 13) {
                 $(this).parents('tr').prevAll('form:first').submit();
             }
-        });
-
-        // FIXED: Handle amount tendered changes for automatic payment addition
-        $('#amount_tendered').on('blur', function() {
-            // Submit form when amount is changed and field loses focus
-            $('#add_payment_form').submit();
         });
 
         $('#finish_sale_button').keypress(function(event) {
@@ -1187,57 +1198,45 @@ if (isset($success)) {
             $('#cart_' + $(this).attr('data-line')).submit();
         });
 
-        // Initialize payment handlers on page load
+        // Initialize pure native payment handlers
         initializePaymentHandlers();
     });
 
-    // Function to initialize payment event handlers
+    // PURE NATIVE JS PAYMENT SUBMISSION (NO DOUBLE HACKS)
     function initializePaymentHandlers() {
-        // Remove existing handlers to prevent duplicates
-        $('#payment_types').off('change.paymentHandler');
-        $('#amount_tendered').off('blur.paymentHandler keypress.paymentHandler input.paymentHandler change.paymentHandler');
-        $('#add_payment_form').off('submit.paymentHandler');
-        $('.delete_payment_button').off('click.paymentHandler');
-
-        // Handle payment type changes
-        $('#payment_types').on('change.paymentHandler', function() {
+        $('#payment_types').off('change.paymentHandler').on('change.paymentHandler', function() {
             check_payment_type();
-            // Auto-submit the form when payment type changes
             $('#add_payment_form').submit();
         });
 
-        // Handle amount tendered changes
+        $('#amount_tendered').off('blur.paymentHandler keypress.paymentHandler input.paymentHandler change.paymentHandler');
+        
         $('#amount_tendered').on('input.paymentHandler change.paymentHandler', function() {
             $('#hidden_amount_tendered').val($(this).val());
         });
 
-        // Handle amount tendered blur (auto-submit)
         $('#amount_tendered').on('blur.paymentHandler', function() {
             $('#add_payment_form').submit();
         });
 
-        // Handle Enter key on amount tendered
         $('#amount_tendered').on('keypress.paymentHandler', function(event) {
             if (event.which == 13) {
                 $('#add_payment_form').submit();
             }
         });
 
-        // Handle payment deletion buttons
-        $('.delete_payment_button').on('click.paymentHandler', function() {
-            const payment_id = $(this).data('payment-id');
-            $.post("<?= site_url('sales/deletePayment/'); ?>" + payment_id, function() {
-                window.location.reload();
-            });
+        $('.delete_payment_button').on('click.paymentHandler', function(e) {
+            e.preventDefault();
+            var href = $(this).parent('a').attr('href') || $(this).attr('href');
+            if (href) {
+                $.post(href, function() { window.location.reload(); });
+            }
         });
 
-        // Run check_payment_type if payment type is already selected
         if ($('#payment_types').val()) {
             check_payment_type();
         }
     }
-
-
 
     function check_payment_type() {
         var cash_mode = <?= json_encode($cash_mode) ?>;
@@ -1261,10 +1260,17 @@ if (isset($success)) {
             $("#sale_total").html("<?= to_currency($non_cash_total) ?>");
             $("#sale_amount_due").html("<?= to_currency($amount_due) ?>");
             $("#amount_tendered_label").html("<?= lang(ucfirst($controller_name) . '.amount_tendered') ?>");
+            
+            // Allow OSPOS to auto-fill the full amount_due, so Complete button shows up natively!
             $("#amount_tendered:enabled").val("<?= to_currency_no_money($amount_due) ?>");
+            
             $(".giftcard-input").attr('disabled', true);
             $(".non-giftcard-input").attr('disabled', false);
         }
+        
+        // VISUAL HIGHLIGHT: Add yellow row when selecting discount card
+        calculate_card_discount();
+
         $('#hidden_amount_tendered').val($('#amount_tendered').val());
     }
 
@@ -1729,6 +1735,7 @@ const currentOrderId = <?= $current_order_id ?? 'null' ?>;
 
 
 $(document).ready(function() {
+    // 1. Queue Orders Popup (No C.Order popup)
     $("#order_button").on("click", function(e) {
         e.preventDefault(); // stop form submission
         $.get("<?= site_url('sales/order_queue'); ?>", function(data) {
@@ -1745,6 +1752,31 @@ $('#new_order_button').click(function() {
     }
 });
 
+/* FEATURE 1: Function to calculate and show Card Discount Display Row */
+function calculate_card_discount() {
+    var selected_option = $('#payment_types').find('option:selected').text();
+    var discountMatch = selected_option.match(/\[(\d+(\.\d+)?)%\]/);
+    
+    if (discountMatch) {
+        var discountPercent = parseFloat(discountMatch[1]);
+        var total_text = $('#sale_total').text().replace(/[^\d.]/g, '');
+        var current_total = parseFloat(total_text);
+        
+        if (!isNaN(current_total)) {
+            var discount_amount = current_total * (discountPercent / 100);
+            var new_total = current_total - discount_amount;
+            
+            // Update red display row
+            $('#discounted_total_display').text('Rs. ' + new_total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            $('#card_discount_row').show();
+            
+            // Update the "Amount" input to show the user's out-of-pocket total (e.g. 699)
+            $("#amount_tendered:enabled").val(new_total.toFixed(2));
+        }
+    } else {
+        $('#card_discount_row').hide();
+    }
+}
 
 </script>
 

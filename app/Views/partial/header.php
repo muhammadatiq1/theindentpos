@@ -22,7 +22,6 @@ $request = Services::request();
     <link rel="stylesheet" href="<?= 'resources/bootswatch/' . (empty($config['theme']) ? 'flatly' : esc($config['theme'])) . '/bootstrap.min.css' ?>">
 
     <?php if (ENVIRONMENT == 'development' || get_cookie('debug') == 'true' || $request->getGet('debug') == 'true') : ?>
-        <!-- inject:debug:css -->
         <link rel="stylesheet" href="resources/css/jquery-ui-fe010342cb.css">
         <link rel="stylesheet" href="resources/css/bootstrap-dialog-1716ef6e7c.css">
         <link rel="stylesheet" href="resources/css/jasny-bootstrap-40bf85f3ed.css">
@@ -43,8 +42,6 @@ $request = Services::request();
         <link rel="stylesheet" href="resources/css/receipt-0606f1c54e.css">
         <link rel="stylesheet" href="resources/css/register-a6a6cc948d.css">
         <link rel="stylesheet" href="resources/css/reports-ace7faf688.css">
-        <!-- endinject -->
-        <!-- inject:debug:js -->
         <script src="resources/js/jquery-12e87d2f3a.js"></script>
         <script src="resources/js/jquery-4fa896f615.form.js"></script>
         <script src="resources/js/jquery-a0350e8820.validate.js"></script>
@@ -79,21 +76,14 @@ $request = Services::request();
         <script src="resources/js/imgpreview-1db063409f.full.jquery.js"></script>
         <script src="resources/js/manage_tables-9b98d5573a.js"></script>
         <script src="resources/js/nominatim-89be77a11a.autocomplete.js"></script>
-        <!-- endinject -->
-    <?php else : ?>
-        <!--inject:prod:css -->
+        <?php else : ?>
         <link rel="stylesheet" href="resources/opensourcepos-8e34d6a398.min.css">
-        <!-- endinject -->
-
-        <!-- Tweaks to the UI for a particular theme should drop here  -->
         <?php if ($config['theme'] != 'flatly' && file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/css/' . esc($config['theme']) . '.css')) { ?>
             <link rel="stylesheet" href="<?= 'css/' . esc($config['theme']) . '.css' ?>">
         <?php } ?>
-        <!-- inject:prod:js -->
         <script src="resources/jquery-2c872dbe60.min.js"></script>
         <script src="resources/opensourcepos-39c74204a5.min.js"></script>
-        <!-- endinject -->
-    <?php endif; ?>
+        <?php endif; ?>
 
     <?= view('partial/header_js') ?>
     <?= view('partial/lang_lines') ?>
@@ -147,6 +137,14 @@ $request = Services::request();
                                     <?= lang('Module.' . $module->module_id) ?>
                                 </a>
                             </li>
+                           <?php if ($module->module_id == 'sales'): ?>
+                                <li class="<?= (isset($controller_name) && $controller_name == 'card_discounts') ? 'active' : '' ?>">
+                                    <a href="<?= site_url('card_discounts') ?>" title="Card Discount" class="menu-icon">
+                                        <i class="glyphicon glyphicon-credit-card" style="font-size: 22px; display: block; margin-bottom: 4px;"></i>
+                                        Card Discount
+                                    </a>
+                                </li>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     </ul>
                 </div>
