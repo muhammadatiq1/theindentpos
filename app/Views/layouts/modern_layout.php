@@ -608,6 +608,191 @@
                 sidebar?.classList.remove('active');
             }
         });
+
+        // ==============================
+        // PREMIUM DASHBOARD ENHANCEMENTS
+        // ==============================
+
+        // Update current date and time
+        function updateDateTime() {
+            const dateDisplay = document.getElementById('currentDate');
+            const timeDisplay = document.getElementById('currentTime');
+            
+            if (dateDisplay || timeDisplay) {
+                const now = new Date();
+                const options = { 
+                    weekday: 'short', 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                };
+                
+                if (dateDisplay) {
+                    dateDisplay.textContent = now.toLocaleDateString('en-US', options);
+                }
+                
+                if (timeDisplay) {
+                    const timeOptions = { 
+                        hour: '2-digit', 
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: true
+                    };
+                    timeDisplay.textContent = now.toLocaleTimeString('en-US', timeOptions);
+                }
+            }
+        }
+
+        // Update time every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Add animations to stat cards on load
+        function animateStatCards() {
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }, index * 100);
+            });
+        }
+
+        // Add animations to activity feed items
+        function animateActivityItems() {
+            const activityItems = document.querySelectorAll('.activity-item');
+            activityItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.animation = 'slideInLeft 0.5s ease-out forwards';
+                }, index * 50);
+            });
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Product item hover effects
+        function setupProductItemInteractions() {
+            const productItems = document.querySelectorAll('.product-item');
+            productItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateX(8px)';
+                });
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateX(0)';
+                });
+            });
+        }
+
+        // Chart bar animation on hover
+        function setupChartBarInteractions() {
+            const bars = document.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                bar.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-6px)';
+                    this.style.boxShadow = '0 10px 20px rgba(102, 126, 234, 0.3)';
+                });
+                bar.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        }
+
+        // Quick action button ripple effect
+        function setupQuickActionButtons() {
+            const quickActionBtns = document.querySelectorAll('.quick-action-btn');
+            quickActionBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    ripple.style.position = 'absolute';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+                    
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.offsetX - size / 2;
+                    const y = e.offsetY - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.animation = 'ripple 0.6s ease-out';
+                    ripple.style.pointerEvents = 'none';
+                    
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+        }
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                0% {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize all interactive elements when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                animateStatCards();
+                animateActivityItems();
+                setupProductItemInteractions();
+                setupChartBarInteractions();
+                setupQuickActionButtons();
+            });
+        } else {
+            animateStatCards();
+            animateActivityItems();
+            setupProductItemInteractions();
+            setupChartBarInteractions();
+            setupQuickActionButtons();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+K or Cmd+K for quick search in dashboard
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                const searchInput = document.querySelector('.navbar-search input');
+                if (searchInput) {
+                    searchInput.focus();
+                }
+            }
+        });
+
+        // Track scroll position for animations
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            lastScrollTop = window.scrollY;
+            
+            // Add subtle animations on scroll
+            const cards = document.querySelectorAll('.card-advanced');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
     </script>
 
     <?php if (isset($additional_js)): ?>

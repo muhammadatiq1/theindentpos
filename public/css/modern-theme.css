@@ -829,6 +829,380 @@ input.is-valid {
 .text-danger { color: var(--danger); }
 .text-warning { color: var(--warning); }
 .text-info { color: var(--info); }
+
+/* ============================================
+   PREMIUM DASHBOARD ENHANCEMENTS
+   Advanced animations and visual effects
+   ============================================ */
+
+/* Gradient Backgrounds */
+.gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-success {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+}
+
+.gradient-warning {
+  background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+}
+
+.gradient-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+}
+
+.gradient-info {
+  background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
+}
+
+/* Advanced Card Styles */
+.card-premium {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-top: 3px solid var(--primary);
+  box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.1);
+}
+
+.card-premium:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 35px -5px rgba(102, 126, 234, 0.15);
+}
+
+/* Stat Card Enhancements */
+.stat-card-enhanced {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-enhanced::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+/* Hover Effects */
+.hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 35px -5px rgba(0, 0, 0, 0.15);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+}
+
+/* Animation Classes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Badge Styles */
+.badge-gradient {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  display: inline-block;
+}
+
+.badge-success {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.badge-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #7f1d1d;
+}
+
+.badge-info {
+  background: #e0f2fe;
+  color: #0c4a6e;
+}
+
+/* Status Indicators */
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.status-online { background: #10b981; }
+.status-away { background: #f59e0b; }
+.status-offline { background: #ef4444; }
+.status-busy { background: #8b5cf6; }
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+.skeleton-text {
+  height: 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.skeleton-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Tooltip Styles */
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  width: 120px;
+  background-color: #111827;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip-container:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Progress Ring */
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.35s;
+  stroke: #667eea;
+  fill: transparent;
+}
+
+/* Data Visualization Elements */
+.chart-bar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+  gap: 8px;
+  height: 150px;
+}
+
+.chart-bar-item {
+  flex: 1;
+  background: linear-gradient(180deg, #667eea, #764ba2);
+  border-radius: 6px 6px 0 0;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 10px;
+}
+
+.chart-bar-item:hover {
+  filter: brightness(1.1);
+  transform: translateY(-4px);
+}
+
+/* Card Shimmer Effect */
+.card-shimmer {
+  background: linear-gradient(90deg, #f5f5f5 25%, #e5e5e5 50%, #f5f5f5 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Responsive Grid */
+@media (max-width: 1400px) {
+  .grid-responsive-12 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid-responsive-12 {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    min-height: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gradient-primary {
+    padding: 1rem !important;
+  }
+
+  .card-premium {
+    border-radius: 0.75rem;
+  }
+
+  .stat-card-enhanced::after {
+    width: 60px;
+    height: 60px;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.4s ease-out;
+  }
+}
+
+@media (max-width: 480px) {
+  .badge-gradient {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .chart-bar {
+    height: 100px;
+  }
+}
+
+/* Dark Mode Support for Premium Dashboard */
+@media (prefers-color-scheme: dark) {
+  .gradient-primary {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  }
+
+  .card-premium {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .stat-card-enhanced::after {
+    background: radial-gradient(circle, rgba(79, 70, 229, 0.15) 0%, transparent 70%);
+  }
+
+  .badge-success {
+    background: #064e3b;
+    color: #a7f3d0;
+  }
+
+  .badge-warning {
+    background: #78350f;
+    color: #fef08a;
+  }
+
+  .badge-danger {
+    background: #7f1d1d;
+    color: #fca5a5;
+  }
+
+  .badge-info {
+    background: #164e63;
+    color: #67e8f9;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #2d3748 25%, #374151 50%, #2d3748 75%);
+  }
+
+  .chart-bar-item {
+    background: linear-gradient(180deg, #4f46e5, #7c3aed);
+  }
+}
 .text-muted { color: var(--text-tertiary); }
 .text-white { color: white; }
 .fw-bold { font-weight: 700; }
