@@ -27,7 +27,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #4338ca 100%);
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
             padding: 1rem;
             position: relative;
             overflow: hidden;
@@ -40,7 +40,7 @@
             right: -10%;
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
             border-radius: 50%;
             animation: float 6s ease-in-out infinite;
         }
@@ -52,7 +52,7 @@
             left: -5%;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(79, 70, 229, 0.03) 0%, transparent 70%);
             border-radius: 50%;
             animation: float 8s ease-in-out infinite reverse;
         }
@@ -66,10 +66,10 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 480px;
+            max-width: 460px;
             background: white;
             border-radius: 1.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             animation: slideUp 0.6s ease-out;
         }
@@ -86,44 +86,47 @@
         }
 
         .login-header {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            padding: 3rem 2rem 2rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            padding: 3.5rem 2rem 2.5rem;
             text-align: center;
             color: white;
         }
 
         .login-logo {
-            width: 80px;
-            height: 80px;
+            width: 90px;
+            height: 90px;
             margin: 0 auto 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 1rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 1.25rem;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2.5rem;
             color: white;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
         .login-logo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 0.75rem;
+            border-radius: 1rem;
         }
 
         .login-header h1 {
-            font-size: 2rem;
-            margin: 0;
+            font-size: 1.875rem;
+            margin: 0 0 0.5rem 0;
             color: white;
             font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .login-header p {
-            margin: 0.5rem 0 0;
+            margin: 0;
             font-size: 0.95rem;
-            opacity: 0.9;
-            color: rgba(255, 255, 255, 0.9);
+            opacity: 0.95;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 400;
         }
 
         .login-body {
@@ -133,43 +136,93 @@
         .login-form {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.75rem;
         }
 
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
 
         .form-group label {
-            font-weight: 600;
-            font-size: 0.9rem;
+            font-weight: 700;
+            font-size: 0.85rem;
             color: #374151;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .form-input {
-            padding: 0.875rem 1rem;
+            padding: 0.95rem 1rem;
             font-size: 1rem;
-            border: 2px solid #e5e7eb;
+            border: 1.5px solid #e5e7eb;
             border-radius: 0.75rem;
             transition: all 0.3s ease;
             font-family: inherit;
+            background: #f9fafb;
         }
 
         .form-input:focus {
             outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
         }
 
         .form-input::placeholder {
             color: #d1d5db;
         }
 
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .form-remember input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #2563eb;
+            border-radius: 0.375rem;
+        }
+
+        .form-remember label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #6b7280;
+            cursor: pointer;
+            margin: 0;
+            text-transform: none;
+            letter-spacing: normal;
+        }
+
+        .form-remember label:hover {
+            color: #374151;
+        }
+
+        .form-forgot {
+            text-align: right;
+        }
+
+        .form-forgot a {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #2563eb;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .form-forgot a:hover {
+            color: #1e40af;
+            text-decoration: underline;
+        }
+
         .login-btn {
-            padding: 1rem;
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            padding: 1.05rem;
+            background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
             color: white;
             border: none;
             border-radius: 0.75rem;
@@ -179,15 +232,25 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 0.5rem;
         }
 
         .login-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
         }
 
         .login-btn:active {
             transform: translateY(0);
+        }
+
+        .login-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
         .alert-box {
@@ -223,16 +286,17 @@
         }
 
         .login-footer {
-            background-color: #f9fafb;
+            background-color: #fafafa;
             padding: 1.5rem 2rem;
             text-align: center;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid #f0f0f0;
         }
 
         .login-footer p {
             margin: 0;
-            font-size: 0.875rem;
-            color: #6b7280;
+            font-size: 0.8rem;
+            color: #9ca3af;
+            letter-spacing: 0.3px;
         }
 
         .form-divider {
@@ -266,23 +330,37 @@
 
         @media (max-width: 768px) {
             .login-container {
-                border-radius: 1rem;
+                border-radius: 1.25rem;
             }
 
             .login-header {
-                padding: 2rem 1.5rem 1.5rem;
+                padding: 2.5rem 1.5rem 1.75rem;
             }
 
             .login-header h1 {
-                font-size: 1.5rem;
+                font-size: 1.625rem;
+            }
+
+            .login-logo {
+                width: 75px;
+                height: 75px;
             }
 
             .login-body {
-                padding: 1.5rem;
+                padding: 2rem;
             }
 
             .login-footer {
-                padding: 1rem 1.5rem;
+                padding: 1.25rem 1.5rem;
+            }
+
+            .form-options {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-forgot {
+                text-align: left;
             }
         }
 
@@ -293,32 +371,55 @@
 
             .login-container {
                 max-width: 100%;
-                border-radius: 0.75rem;
+                border-radius: 1rem;
             }
 
             .login-header {
-                padding: 1.5rem 1rem 1rem;
+                padding: 2rem 1rem 1.25rem;
             }
 
             .login-header h1 {
-                font-size: 1.25rem;
+                font-size: 1.375rem;
             }
 
             .login-header p {
                 font-size: 0.85rem;
             }
 
+            .login-logo {
+                width: 65px;
+                height: 65px;
+                margin-bottom: 1rem;
+            }
+
             .login-body {
-                padding: 1.25rem;
+                padding: 1.5rem 1rem;
             }
 
             .form-input {
-                padding: 0.75rem 0.875rem;
+                padding: 0.85rem 0.875rem;
                 font-size: 16px;
+            }
+
+            .form-group {
+                gap: 0.5rem;
+            }
+
+            .login-form {
+                gap: 1.25rem;
+            }
+
+            .login-btn {
+                padding: 0.95rem;
+                font-size: 0.95rem;
             }
 
             .login-footer {
                 padding: 1rem;
+            }
+
+            .form-options {
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -373,36 +474,26 @@
                 <?= form_open('login', ['class' => 'login-form']) ?>
 
                 <div class="form-group">
-                    <label for="input-username">
-                        <svg style="width: 1em; height: 1em; vertical-align: -0.125em; margin-right: 0.5rem;" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" />
-                        </svg>
-                        <?= lang('Login.username') ?>
-                    </label>
+                    <label for="input-username"><?= lang('Login.username') ?></label>
                     <input
                         class="form-input"
                         id="input-username"
                         name="username"
                         type="text"
-                        placeholder="<?= lang('Login.enter_username') ?? 'Enter your username' ?>"
+                        placeholder="talha@fdeworks.com"
                         required
                         <?php if (ENVIRONMENT == "testing") echo 'value="admin"'; ?>
                     >
                 </div>
 
                 <div class="form-group">
-                    <label for="input-password">
-                        <svg style="width: 1em; height: 1em; vertical-align: -0.125em; margin-right: 0.5rem;" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                        </svg>
-                        <?= lang('Login.password') ?>
-                    </label>
+                    <label for="input-password"><?= lang('Login.password') ?></label>
                     <input
                         class="form-input"
                         id="input-password"
                         name="password"
                         type="password"
-                        placeholder="<?= lang('Login.enter_password') ?? 'Enter your password' ?>"
+                        placeholder="••••••••••••"
                         required
                         <?php if (ENVIRONMENT == "testing") echo 'value="pointofsale"'; ?>
                     >
@@ -414,9 +505,25 @@
                     <div class="g-recaptcha" data-sitekey="<?= $config['gcaptcha_site_key'] ?>"></div>
                 <?php endif; ?>
 
+                <div class="form-options">
+                    <div class="form-remember">
+                        <input
+                            class="form-remember-checkbox"
+                            id="input-remember"
+                            name="remember"
+                            type="checkbox"
+                            value="1"
+                        >
+                        <label for="input-remember"><?= lang('Login.remember_me') ?? 'Remember me' ?></label>
+                    </div>
+                    <div class="form-forgot">
+                        <a href="#"><?= lang('Login.forgot_password') ?? 'Forgot Password?' ?></a>
+                    </div>
+                </div>
+
                 <button class="login-btn" type="submit" name="login-button">
-                    <?= lang('Login.go') ?>
-                    <svg style="width: 1em; height: 1em; vertical-align: -0.125em; margin-left: 0.5rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <?= lang('Login.go') ?? 'Sign In' ?>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                 </button>
@@ -432,20 +539,27 @@
     </div>
 
     <script>
-        // Smooth focus effects
+        // Add smooth focus effects
         document.querySelectorAll('.form-input').forEach(input => {
             input.addEventListener('focus', function() {
                 this.parentElement.style.opacity = '1';
             });
         });
 
-        // Prevent form submission while loading
+        // Disable button while loading
         document.querySelector('.login-form')?.addEventListener('submit', function(e) {
             const btn = this.querySelector('.login-btn');
-            if (btn) {
+            if (btn && !btn.disabled) {
                 btn.disabled = true;
                 btn.style.opacity = '0.7';
-                btn.textContent = '<?= lang("Login.logging_in") ?? "Logging in..." ?>';
+                btn.innerHTML = '<?= lang("Login.logging_in") ?? "Signing in..." ?> <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>';
+            }
+        });
+
+        // Add enter key support for password field
+        document.getElementById('input-password')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.querySelector('.login-form').dispatchEvent(new Event('submit'));
             }
         });
     </script>
